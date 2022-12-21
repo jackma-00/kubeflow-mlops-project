@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: data-pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-21T15:24:56.278858',
+    pipelines.kubeflow.org/pipeline_spec: '{"description": "This simple data pipeline
+      wants to test the custom created components", "name": "data-pipeline"}'}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18}
+spec:
+  entrypoint: data-pipeline
+  templates:
+  - name: data-pipeline
+    dag:
+      tasks:
+      - {name: load-data, template: load-data}
+      - name: normalize-data
+        template: normalize-data
+        dependencies: [load-data]
+  - name: load-data
+    container:
+      args: []
+      image: jackma00/load-dataset:latest
+    outputs:
+      artifacts:
+      - {name: load-data-raw_dataset, path: app/raw_dataset.csv}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.18
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+  - name: normalize-data
+    container:
+      args: [--raw_dataset, /tmp/inputs/input-0/data]
+      image: jackma00/normalize_dataset:latest
+    inputs:
+      artifacts:
+      - name: input-0
+        path: /tmp/inputs/input-0/data
+        raw: {data: app/raw_dataset.csv}
+    outputs:
+      artifacts:
+      - {name: normalize-data-normalized_dataset, path: app/normalized_dataset.csv}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.18
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+  arguments:
+    parameters: []
+  serviceAccountName: pipeline-runner
