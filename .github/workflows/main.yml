@@ -24,14 +24,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build the Load Data image 
-      - run: docker build --tag jackma00/load-dataset:latest ./components/data/load-dataset/
+        run: docker build --tag jackma00/load-dataset:latest ./components/data/load-dataset/
       - name: Push the Load Data image to the container registry
-      - run: docker push jackma00/load-dataset:latest
+        run: docker push jackma00/load-dataset:latest
       
       - name: Build the Normalize Data image 
-      - run: docker build --tag jackma00/normalize-dataset:latest ./components/data/normalize-dataset/
+        run: docker build --tag jackma00/normalize-dataset:latest ./components/data/normalize-dataset/
       - name: Push the Load Data image to the container registry
-      - run: docker push jackma00/normalize-dataset:latest
+        run: docker push jackma00/normalize-dataset:latest
       
       
 
