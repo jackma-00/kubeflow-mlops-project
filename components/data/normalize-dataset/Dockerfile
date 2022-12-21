@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY ./src .
 
-CMD [ "python", "normalize_dataset.py" ]
+#CMD ["python", "normalize_dataset.py"]

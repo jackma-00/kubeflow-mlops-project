@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY ./src .
 
-CMD [ "python", "load_dataset.py" ]
+#CMD ["python", "load_dataset.py"]

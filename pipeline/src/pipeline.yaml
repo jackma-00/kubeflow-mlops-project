@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   generateName: pipeline-
-  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-21T15:35:20.378366',
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-21T16:26:41.881518',
     pipelines.kubeflow.org/pipeline_spec: '{"description": "This simple pipeline wants
       to test the custom created components, as well as the CI/CD operations", "name":
       "pipeline"}'}
@@ -16,7 +16,7 @@ spec:
       image: jackma00/load-dataset:latest
     outputs:
       artifacts:
-      - {name: load-data-raw_dataset, path: app/raw_dataset.csv}
+      - {name: load-data-raw_dataset, path: /app/raw_dataset.csv}
     metadata:
       labels:
         pipelines.kubeflow.org/kfp_sdk_version: 1.8.18
@@ -30,10 +30,10 @@ spec:
       artifacts:
       - name: input-0
         path: /tmp/inputs/input-0/data
-        raw: {data: app/raw_dataset.csv}
+        raw: {data: /app/raw_dataset.csv}
     outputs:
       artifacts:
-      - {name: normalize-data-normalized_dataset, path: app/normalized_dataset.csv}
+      - {name: normalize-data-normalized_dataset, path: /app/normalized_dataset.csv}
     metadata:
       labels:
         pipelines.kubeflow.org/kfp_sdk_version: 1.8.18
