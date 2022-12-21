@@ -2,7 +2,7 @@ import argparse
 import pandas as pd
 
 def load_dataset():
-    """The function load the dataset from the URL."""
+    """The function loads the dataset from the URL."""
 
     # URL where to retrieve the dataset
     csv_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
@@ -18,20 +18,14 @@ def load_dataset():
     # Return dataset
     return df
 
-def save_dataset(df, output_dataset_path):
-    """The function save the dataset to the given path."""
+def save_dataset(df):
+    """The function saves the dataset into the running container."""
 
     # Save dataset
-    with open(output_dataset_path, 'w') as f:
-        df.to_csv(f)
+    df.to_csv('raw_dataset.csv')
 
 
 if __name__ == '__main__':
-
-    # Parsing arguments 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--output_dataset') # This will be the output dataset path (with respect to the storage type supported)
-    args = parser.parse_args()
 
     print('Loading data ...')
     
@@ -39,4 +33,4 @@ if __name__ == '__main__':
     dataset = load_dataset()
 
     # Save the dataset to the given path 
-    save_dataset(dataset, args.output_dataset)
+    save_dataset(dataset)
