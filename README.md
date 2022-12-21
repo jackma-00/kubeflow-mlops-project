@@ -1,1 +1,1 @@
-# kubeflow-mlops-project
+# Kubeflow Mlops Project
