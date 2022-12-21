@@ -9,6 +9,7 @@ def normalize_dataset(input_dataset_path):
         df = pd.read_csv(f)
         labels = df.pop('Labels')
 
+    # Initialize the scaler
     scaler = StandardScaler()
 
     df = pd.DataFrame(scaler.fit_transform(df))
