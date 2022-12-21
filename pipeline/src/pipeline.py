@@ -4,7 +4,7 @@ from kfp import compiler
 
 # Component's images
 LOAD_DATASET_IMAGE = 'jackma00/load-dataset:latest'
-NORMALIZE_DATASET_IMAGE = 'jackma00/normalize_dataset:latest'
+NORMALIZE_DATASET_IMAGE = 'jackma00/normalize-dataset:latest' 
 
 # Building components from images
 def load_dataset_component():
@@ -31,7 +31,7 @@ def pipeline():
     load_dataset_task = load_dataset_component()
 
     normalize_dataset_task = normalize_dataset_component(
-        raw_dataset=InputArgumentPath(load_dataset_task.file_outputs['raw_dataset'])).after(load_dataset_task)
+        raw_dataset=InputArgumentPath(load_dataset_task.outputs['raw_dataset'])).after(load_dataset_task)
 
 # Compile the pipeline
 compiler.Compiler().compile(

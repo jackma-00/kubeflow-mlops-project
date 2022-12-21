@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   generateName: pipeline-
-  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-21T16:26:41.881518',
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-21T17:56:33.925617',
     pipelines.kubeflow.org/pipeline_spec: '{"description": "This simple pipeline wants
       to test the custom created components, as well as the CI/CD operations", "name":
       "pipeline"}'}
@@ -12,11 +12,11 @@ spec:
   templates:
   - name: load-data
     container:
-      args: []
+      command: [python, load_dataset.py]
       image: jackma00/load-dataset:latest
     outputs:
       artifacts:
-      - {name: load-data-raw_dataset, path: /app/raw_dataset.csv}
+      - {name: load-data-raw_dataset, path: raw_dataset.csv}
     metadata:
       labels:
         pipelines.kubeflow.org/kfp_sdk_version: 1.8.18
@@ -25,15 +25,14 @@ spec:
   - name: normalize-data
     container:
       args: [--raw_dataset, /tmp/inputs/input-0/data]
-      image: jackma00/normalize_dataset:latest
+      command: [python, normalize_dataset.py]
+      image: jackma00/normalize-dataset:latest
     inputs:
       artifacts:
-      - name: input-0
-        path: /tmp/inputs/input-0/data
-        raw: {data: /app/raw_dataset.csv}
+      - {name: load-data-raw_dataset, path: /tmp/inputs/input-0/data}
     outputs:
       artifacts:
-      - {name: normalize-data-normalized_dataset, path: /app/normalized_dataset.csv}
+      - {name: normalize-data-normalized_dataset, path: normalized_dataset.csv}
     metadata:
       labels:
         pipelines.kubeflow.org/kfp_sdk_version: 1.8.18
@@ -46,6 +45,9 @@ spec:
       - name: normalize-data
         template: normalize-data
         dependencies: [load-data]
+        arguments:
+          artifacts:
+          - {name: load-data-raw_dataset, from: '{{tasks.load-data.outputs.artifacts.load-data-raw_dataset}}'}
   arguments:
     parameters: []
   serviceAccountName: pipeline-runner
