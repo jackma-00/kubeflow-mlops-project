@@ -13,7 +13,7 @@ def load_dataset_component():
         image=LOAD_DATASET_IMAGE,
         #command=[], # The CMD has already been provided with the Dockerfile
         arguments=[], # None
-        file_outputs={'raw_dataset': 'app/raw_dataset.csv'})
+        file_outputs={'raw_dataset': '/app/raw_dataset.csv'})
 
 def normalize_dataset_component(raw_dataset):
     return ContainerOp(
@@ -21,7 +21,7 @@ def normalize_dataset_component(raw_dataset):
         image=NORMALIZE_DATASET_IMAGE,
         #command=[], # The CMD has already been provided with the Dockerfile
         arguments=['--raw_dataset', raw_dataset],
-        file_outputs={'normalized_dataset': 'app/normalized_dataset.csv'})
+        file_outputs={'normalized_dataset': '/app/normalized_dataset.csv'})
 
 
 # Define the pipeline
