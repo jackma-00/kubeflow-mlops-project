@@ -1,11 +1,12 @@
+# Workflow name.
 name: CI CD Pipeline
 
+# Run workflow on every push to main branch.
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [main]
 
+# Workflow's jobs.
 jobs:
 
   build:
@@ -24,12 +25,12 @@ jobs:
       
       - name: Build the Load Data image 
       - run: docker build --tag jackma00/load-dataset:latest ./components/data/load-dataset/
-      - name: Push the Load Data image
+      - name: Push the Load Data image to the container registry
       - run: docker push jackma00/load-dataset:latest
       
       - name: Build the Normalize Data image 
       - run: docker build --tag jackma00/normalize-dataset:latest ./components/data/normalize-dataset/
-      - name: Push the Load Data image
+      - name: Push the Load Data image to the container registry
       - run: docker push jackma00/normalize-dataset:latest
       
       
