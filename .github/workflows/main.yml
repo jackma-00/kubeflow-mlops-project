@@ -38,10 +38,10 @@ jobs:
       - name: Push the Train knn image to the container registry
         run: docker push jackma00/train-knn:latest
 
-      - name: Build the Serve Model image
-        run: docker build --tag jackma00/serve-model:latest ./components/serving/kserve/
-      - name: Push the Serve Model image to the container registry
-        run: docker push jackma00/serve-model:latest
+      - name: Build the KServe Serve image
+        run: docker build --tag jackma00/kserve-serve:latest ./components/serving/kserve/
+      - name: Push the KServe Serve image to the container registry
+        run: docker push jackma00/kserve-serve:latest
       
       
 

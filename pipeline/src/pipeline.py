@@ -6,6 +6,7 @@ from kfp import compiler
 LOAD_DATASET_IMAGE = 'jackma00/load-dataset:latest'
 NORMALIZE_DATASET_IMAGE = 'jackma00/normalize-dataset:latest' 
 TRAIN_KNN_IMAGE = 'jackma00/train-knn:latest'
+KSERVE_SERVE_IMAGE = 'jackma00/kserve-serve:latest'
 
 # Building components from images
 def load_dataset_component():
@@ -31,6 +32,13 @@ def train_knn_component(normalized_dataset):
         arguments=['--normalized_dataset', normalized_dataset],
         file_outputs={'knn_model': 'knn.pkl'})
 
+def kserve_serve_component(model):
+    return ContainerOp(
+        name='KServe Serve',
+        image=KSERVE_SERVE_IMAGE,
+        command=['python', 'serve_model.py'],
+        arguments=['--model', model])
+
 
 # Define the pipeline
 @pipeline(
@@ -44,3 +52,6 @@ def pipeline():
 
     train_knn_task = train_knn_component(
         normalized_dataset=InputArgumentPath(normalize_dataset_task.outputs['normalized_dataset'])).after(normalize_dataset_task)
+
+    kserve_serve_task = kserve_serve_component(
+        model=InputArgumentPath(train_knn_task.outputs['knn_model'])).after(train_knn_task)

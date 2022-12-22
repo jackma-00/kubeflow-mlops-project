@@ -13,6 +13,8 @@ def serve(model):
     
     # Adapt model uri to a s3 compatible one 
     #model_uri = model.path.replace('/minio/', 's3://')
+    print(model)
+    print(type(model))
 
     # This will retrieve the current namespace of your Kubernetes context. The InferenceService will be deployed in this namespace.
     namespace = utils.get_default_target_namespace()
@@ -44,7 +46,7 @@ if __name__ == '__main__':
     parser.add_argument('--model')
     args = parser.parse_args()
 
-    print("Serving the model ...")
+    print("Serving model using KServe ...")
 
     # Serve model
     serve(args.model)
