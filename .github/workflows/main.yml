@@ -32,6 +32,11 @@ jobs:
         run: docker build --tag jackma00/normalize-dataset:latest ./components/data/normalize-dataset/
       - name: Push the Load Data image to the container registry
         run: docker push jackma00/normalize-dataset:latest
+
+      - name: Build the Train knn image
+        run: docker build --tag jackma00/train-knn:latest ./components/models/knn/
+      - name: Push the Train knn image to the container registry
+        run: docker push jackma00/train-knn:latest
       
       
 
