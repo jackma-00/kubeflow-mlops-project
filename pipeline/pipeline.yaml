@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   generateName: pipeline-
-  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-22T13:20:47.879195',
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-22T15:01:15.845120',
     pipelines.kubeflow.org/pipeline_spec: '{"description": "This simple pipeline wants
       to test the custom created components, as well as the CI/CD operations", "name":
       "pipeline"}'}
