@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   generateName: pipeline-
-  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-22T11:56:04.828646',
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-22T12:35:04.450711',
     pipelines.kubeflow.org/pipeline_spec: '{"description": "This simple pipeline wants
       to test the custom created components, as well as the CI/CD operations", "name":
       "pipeline"}'}
@@ -48,6 +48,28 @@ spec:
         arguments:
           artifacts:
           - {name: load-data-raw_dataset, from: '{{tasks.load-data.outputs.artifacts.load-data-raw_dataset}}'}
+      - name: train-knn-model
+        template: train-knn-model
+        dependencies: [normalize-data]
+        arguments:
+          artifacts:
+          - {name: normalize-data-normalized_dataset, from: '{{tasks.normalize-data.outputs.artifacts.normalize-data-normalized_dataset}}'}
+  - name: train-knn-model
+    container:
+      args: [--normalized_dataset, /tmp/inputs/input-0/data]
+      command: [python, train_knn.py]
+      image: jackma00/train-knn:latest
+    inputs:
+      artifacts:
+      - {name: normalize-data-normalized_dataset, path: /tmp/inputs/input-0/data}
+    outputs:
+      artifacts:
+      - {name: train-knn-model-knn_model, path: knn.pkl}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.18
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
   arguments:
     parameters: []
   serviceAccountName: pipeline-runner

@@ -35,6 +35,8 @@ if __name__ == '__main__':
     parser.add_argument('--normalized_dataset')
     args = parser.parse_args()
 
+    print("Training knn model ...")
+
     # Train model
     knn = train_knn(args.normalized_dataset)
 
