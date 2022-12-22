@@ -34,6 +34,6 @@ def pipeline():
         raw_dataset=InputArgumentPath(load_dataset_task.outputs['raw_dataset'])).after(load_dataset_task)
 
 # Compile the pipeline
-compiler.Compiler().compile(
-    pipeline_func=pipeline,
-    package_path='pipeline.yaml')
+#compiler.Compiler().compile(
+    #pipeline_func=pipeline,
+    #package_path='pipeline.yaml')
