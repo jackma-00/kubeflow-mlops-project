@@ -29,7 +29,7 @@ You can also add a performance criterion in your CD so that your GitHub action o
 ## Issues 
 
 ### KServe
-Despite giving the model artifact to the serving infrastructure, KServe is unable to retrieve it and load it to the inference end point. Apparently it is only looking for S3 artifact storage paths
+Despite giving the model artifact to the serving infrastructure, KServe is unable to retrieve and load it to the inference end point. Apparently it is looking for S3 artifact storage paths only.
 
 ### Pipelines SDK versions 
 problems of inconsistency between documentation and the actual implementation on the SDK. Particularly with the V2 version.
